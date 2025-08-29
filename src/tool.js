@@ -15,9 +15,8 @@ const browser = await chromium.launch({
 const context = await browser.newContext();
 const page = await context.newPage();
 
-// --- Tools ---
 
-// 1. Take Screenshot
+
 const takeScreenshot = tool({
     name: "take_screenshot",
     description: "Take a screenshot of the current page after DOM is settled",
@@ -32,8 +31,8 @@ const takeScreenshot = tool({
         // Take compressed JPEG screenshot
         const buffer = await page.screenshot({
             path,
-            type: "jpeg",   // force JPEG for compression
-            quality: 50,    // 0–100, lower = smaller file
+            type: "jpeg",
+            quality: 50,
         });
          console.log("screenshot taken")
         return {
@@ -46,7 +45,7 @@ const takeScreenshot = tool({
 
 
 
-// 2. Open URL
+
 const openBrowser = tool({
     name: "open_browser",
     description: "Open a URL in the current browser tab",
@@ -60,7 +59,8 @@ const openBrowser = tool({
     },
 });
 
-// 3. Click on Element
+
+
 const clickOnScreen = tool({
     name: "click_screen",
     description: "Click an element on the page",
@@ -76,7 +76,8 @@ const clickOnScreen = tool({
     },
 });
 
-// 4. Send Keys
+
+
 const sendKeys = tool({
     name: "send_keys",
     description: "Type text into an input field",
@@ -91,7 +92,8 @@ const sendKeys = tool({
     },
 });
 
-// 5. Scroll
+
+
 const scroll = tool({
     name: "scroll",
     description: "Scroll the page vertically",
@@ -105,6 +107,8 @@ const scroll = tool({
         return `Scrolled by ${amount}px`;
     },
 });
+
+
 
 const getSelector = tool({
     name: "get_selector",
@@ -121,17 +125,12 @@ Includes fallbacks for common patterns (login/signup/search/fill).
 
         const intent = element.toLowerCase();
 
-        // ----------------------------
-        // Handle cookie banners
-        // ----------------------------
+
         const agreeBtn = page.locator('button:has-text("I agree")');
         if (await agreeBtn.isVisible().catch(() => false)) {
             await agreeBtn.click();
         }
 
-        // ----------------------------
-        // Search fields
-        // ----------------------------
         if (intent.includes("search")) {
             const selectors = [
                 'input[type="search"]',
@@ -148,9 +147,9 @@ Includes fallbacks for common patterns (login/signup/search/fill).
             throw new Error("❌ No search box found");
         }
 
-        // ----------------------------
+
         // Auth: login/signup
-        // ----------------------------
+
         if (intent.includes("login") || intent.includes("sign in")) {
             return {
                 selector: 'button:has-text("Login"), a:has-text("Login"), button:has-text("Sign in"), a:has-text("Sign in")',
@@ -173,18 +172,13 @@ Includes fallbacks for common patterns (login/signup/search/fill).
             };
         }
 
-// ----------------------------
-// Inputs: Last Name
-// ----------------------------
         if (intent.includes("last name")) {
             return {
                 selector: "input[name*='lastName'], input[id*='lastName'], input[placeholder*='Last Name'], input[aria-label*='Last Name']",
                 method: "fill"
             };
         }
-        // ----------------------------
-        // Inputs: Email
-        // ----------------------------
+
         if (intent.includes("email")) {
             return {
                 selector: "input[type='email'], input[name*='email'], input[id*='email'], input[placeholder*='Email'], textarea[name*='email']",
@@ -192,9 +186,6 @@ Includes fallbacks for common patterns (login/signup/search/fill).
             };
         }
 
-        // ----------------------------
-        // Inputs: Password vs Confirm Password
-        // ----------------------------
         if (intent.includes("confirm password")) {
             return {
                 selector: "input[id*='confirmPassword'], input[name*='confirmPassword'], input[placeholder*='Confirm Password']",
@@ -209,9 +200,9 @@ Includes fallbacks for common patterns (login/signup/search/fill).
             };
         }
 
-        // ----------------------------
+
         // Inputs: Generic text/fill
-        // ----------------------------
+
         if (intent.includes("fill") || intent.includes("text") || intent.includes("name") || intent.includes("username") || intent.includes("first name") || intent.includes("last name")) {
             return {
                 selector: "input[type='text'], textarea, input[name*='name'], input[id*='name'], input[placeholder*='Name']",
@@ -219,9 +210,6 @@ Includes fallbacks for common patterns (login/signup/search/fill).
             };
         }
 
-        // ----------------------------
-        // Fallback: match by button/link text
-        // ----------------------------
         return {
             selector: `button:has-text("${element}"), a:has-text("${element}")`,
             method: "click"
