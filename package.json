@@ -10,8 +10,13 @@
   "private": true,
   "dependencies": {
     "@openai/agents": "^0.0.17",
+    "boxen": "^8.0.1",
+    "chalk": "^5.6.0",
     "dotenv": "^17.2.1",
+    "figlet": "^1.8.2",
+    "gradient-string": "^3.0.0",
     "playwright": "^1.55.0",
+    "readline-sync": "^1.4.10",
     "zod": "^3.25.76"
   }
 }

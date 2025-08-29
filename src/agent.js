@@ -112,7 +112,6 @@ async function runAgent(query=''){
     })
     console.log(res.finalOutput)
 }
-const args=process.argv.slice(2)
-runAgent(
-    args.toString()
-)
+
+
+export {runAgent}
