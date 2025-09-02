@@ -15,7 +15,7 @@ It combines **AI + browser automation** to perform everyday web tasks with simpl
 
 ##  Demo
   🎥 [Watch Demo Video](https://youtu.be/3pYioNIPj84?si=T7wvRCOGtBVvnPOH)
-
+     ![App Screenshot](./assets/img.png) 
 
 ---
 
