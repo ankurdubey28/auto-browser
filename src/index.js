@@ -17,7 +17,7 @@ figlet("Auto-browser", function (err, data) {
 
 
 console.log(
-    boxen(chalk.bold.green("🚀 Welcome to Auto-Browser CLI!"), {
+    boxen(chalk.bold.gray("🚀 Welcome to Auto-Browser CLI!"), {
         padding: 1,
         margin: 1,
         borderStyle: "round",
